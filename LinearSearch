@@ -1,0 +1,44 @@
+//program read the integers from input.txt file and sort it using linear search
+
+/**
+ * @(#)LinearSearch1.java
+ *
+ *
+ * @author Swapnil Sonar
+ * @version 1.00 2014/2/5
+ */
+import java.io.*; 
+import java.util.Scanner;
+public class LinearSearch1 
+{
+		public static void main (String[] args) throws IOException
+		{
+			int array[];	//array of integer
+			int search;		//element to search
+			int size=50;		//size of array
+			int i=0;			//for looping
+			
+			Scanner scan=new Scanner(System.in);
+			Scanner fscan=new Scanner(new File("input.txt"));
+			array=new int[size];
+			
+			while (fscan.hasNextInt())
+			{
+				array[i++]=fscan.nextInt();
+			}
+			
+			System.out.println("Enter the element to search");
+			search=scan.nextInt();
+			
+			for (i = 0; i<size; i++)   	
+			{
+				if(array[i]==search)
+				{
+					System.out.println(search + " is present at location " + (i + 1) + ".");
+					break;
+				}
+			}
+			if(i==size)
+			System.out.println(search + " is not present in array.");
+		}
+}
