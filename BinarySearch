@@ -51,10 +51,10 @@ class SearchingAlgo {
 class BinarySearch {
 	public static void main (String[] args)  throws IOException {
 		SearchingAlgo obj = new SearchingAlgo();
-     	obj.readFile();
+      		obj.readFile();
      	
-     	Scanner scan=new Scanner(System.in);
-     	System.out.println("Enter the element to search");
+     		Scanner scan=new Scanner(System.in);
+     		System.out.println("Enter the element to search");
 		int searchElement = scan.nextInt();
 		obj.search(searchElement);
 }
