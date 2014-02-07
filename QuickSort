@@ -1,0 +1,72 @@
+/**
+ * @(#)QuickSort.java
+ *
+ *
+ * @author Swapni Sonar
+ * @version 1.00 2014/2/7
+ */
+
+import java.io.*;
+import java.util.Scanner;
+
+class SortingAlgo  {
+   int[] inputedNumbers;
+   int number;
+   int sizeOfArray=50;
+  
+   public int readFile() throws IOException{
+    	int i=0;
+    	int count=0;
+    	Scanner fileScan=new Scanner(new File("input.txt"));
+    	inputedNumbers=new int[sizeOfArray];
+    	
+    	while (fileScan.hasNextInt()) {
+    		inputedNumbers[i++]=fileScan.nextInt();
+    		count++;
+    	}
+    	return count;	
+    }
+
+  public void quicksort(int low, int high) {
+    int i = low, j = high;
+    int pivot = inputedNumbers[low + (high-low)/2];
+
+    while (i <= j) {
+        while (inputedNumbers[i] < pivot) {
+        i++;
+      }
+      while (inputedNumbers[j] > pivot) {
+        j--;
+      }
+
+      if (i <= j) {
+        exchange(i, j);
+        i++;
+        j--;
+      }
+    }
+    // Recursion
+    if (low < j)
+      quicksort(low, j);
+    if (i < high)
+      quicksort(i, high);
+  }
+  public void exchange(int i, int j) {
+    int temp = inputedNumbers[i];
+    inputedNumbers[i] = inputedNumbers[j];
+    inputedNumbers[j] = temp;
+  }
+}
+
+public class QuickSort
+{
+	public static void main(String args[]) throws IOException {
+		SortingAlgo obj=new SortingAlgo();
+		int count=obj.readFile();
+		obj.quicksort(0,count);
+		System.out.println("Sorted Array is ");
+		for (int i = 0; i<count; i++) {
+			System.out.println(obj.inputedNumbers[i]);
+    }
+	}
+}
