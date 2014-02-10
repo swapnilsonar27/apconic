@@ -1,0 +1,144 @@
+/*Program that reverse the linked list*/
+/**
+ * @(#)SinglyLinkedList2.java
+ *
+ *
+ * @author Swapnil Sonar
+ * @version 1.00 2014/2/10
+ */
+import java.util.Scanner; 
+ 
+class Node{
+	int data;
+	Node link;
+	
+	public Node() {
+		data=0;
+		link=null;
+	}
+	public Node(int newData, Node newLink) {
+		data=newData;
+		link=newLink;		
+	}
+	public void setLink(Node newNode) {
+		link=newNode;
+	}
+	public Node getLink() {
+		return link;
+	}
+	public void setData(int newData) {
+		data=newData;
+	}
+	public int getData() {
+		return data;
+	}
+}
+
+class LinkedList {
+	Node startNode;
+	Node endNode;
+	int linkedListSize;
+	
+	public LinkedList() {
+		startNode=null;
+		endNode=null;
+		linkedListSize=0;
+	}
+	public boolean isEmpty() {
+		return startNode==null;
+	}
+	public int getSize() {
+		return linkedListSize;
+	}
+	
+	public void insert(int value) {
+		Node newNode=new Node(value,null);
+		linkedListSize++;
+		if(startNode==null)
+		{
+			startNode=newNode;
+			endNode=startNode;
+		}
+		else
+		{
+			endNode.setLink(newNode);
+			endNode=newNode;
+		}	
+	}
+	
+	public void reverse() {
+        if(isEmpty()) { return;}    //curr == null
+        Node currNode,nextNode , loopNode;
+        currNode = startNode; nextNode = startNode.getLink(); startNode.setLink(null);
+
+        while(nextNode != null) {
+            loopNode = nextNode.getLink();
+            nextNode.setLink( currNode );
+            currNode = nextNode;
+            nextNode = loopNode;
+        }
+        startNode = currNode;
+    }
+
+    public void display() {
+        System.out.print("\nSingly Linked List = ");
+        if (linkedListSize == 0) 
+        {
+            System.out.print("empty\n");
+            return;
+        }    
+        if (startNode.getLink() == null) 
+        {
+            System.out.println(startNode.getData() );
+            return;
+        }
+        Node ptr = startNode;
+        System.out.print(startNode.getData()+ "->");
+        ptr = startNode.getLink();
+        while (ptr.getLink() != null)
+        {
+            System.out.print(ptr.getData()+ "->");
+            ptr = ptr.getLink();
+        }
+        System.out.print(ptr.getData()+ "\n");
+    }
+    
+}
+
+public class SinglyLinkedList2 {
+
+    public static void main(String[] args)
+    {             
+        Scanner scan = new Scanner(System.in);
+        LinkedList list = new LinkedList();
+        
+        while(true)
+        {
+        	System.out.println("1. Insert element into linked list");
+            System.out.println("2. Reverse the linked list");
+            System.out.println("3. Display Linked List");
+            System.out.println("4. Exit ");
+            int choice = scan.nextInt();            
+            switch (choice)
+            {
+            case 1 : 
+                System.out.println("Enter integer element to insert");
+                list.insert( scan.nextInt() );                     
+                break;                          
+            case 2 : 
+                list.reverse();
+                break;                         
+            case 3 : 
+            	list.display();
+                break;                                          
+            case 4 : 
+                System.exit(0);
+                break;
+            default : 
+                System.out.println("Wrong Entry \n ");
+                break;   
+            }
+            list.display();
+        }
+    }    
+}
