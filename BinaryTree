@@ -1,0 +1,264 @@
+//Program for Binary tree that perform insertion of node, travelsal and representation of Binary tree
+/**
+ * @(#)BinaryTree.java
+ *
+ *
+ * @author Swapnil Sonar
+ * @version 1.00 2014/2/10
+ */
+
+import java.util.*;
+import java.io.*;
+ 
+class Node {
+	int data;
+	Node llink;
+	Node rlink;
+	
+	public Node() {
+		data=0;
+		llink=null;
+		rlink=null;
+	}
+	public Node(int newData, Node newlLink, Node newrLink) {
+		data=newData;
+		llink=newlLink;
+		rlink=newrLink;		
+	}
+	public void setlLink(Node newlNode) {
+		llink=newlNode;
+	}
+	public void setrLink(Node newrNode) {
+		rlink=newrNode;
+	}
+	public Node getrLink() {
+		return rlink;
+	}
+	public Node getlLink() {
+		return llink;
+	}
+	public void setData(int newData) {
+		data=newData;
+	}
+	public int getData() {
+		return data;
+	}
+}
+
+
+class Tree {
+	 Node Root;
+     int NoOfNodes;
+
+    public  Tree()
+      {                                     
+      Root = null;
+      NoOfNodes = 0;
+      }
+
+    public boolean IsEmpty()
+      {
+      return(NoOfNodes == 0);
+      }
+      
+    public Node getRoot()
+      {
+      return Root;
+      }
+      
+     public int Count()
+      {
+      return NoOfNodes;
+      }
+     
+     public int Size(Node ATree)
+      {
+      if (ATree == null)
+        return 0;
+      else
+        return(1 + Size(ATree.getlLink()) + Size(ATree.getrLink())); 
+      }
+      
+     public int Height(Node ATree)
+      {
+      if (ATree == null)
+        return 0;
+      else
+        return (1 + Math.max(Height(ATree.getlLink()), Height(ATree.getrLink())));
+      }
+      
+      public void Insert(int AId)
+      {
+      Node Temp,Current,Parent;
+      if(Root == null)//tree is empty
+        {
+        Temp = new Node(AId,null,null);
+        Root = Temp;
+        NoOfNodes++;
+        }
+      else//tree is not empty
+        {
+        Temp = new Node(AId,null,null);
+        Current = Root;
+        while(true)//never ending while loop
+          {
+          Parent = Current;
+          if(AId < Current.getData())
+            {//go left
+            Current = Current.getlLink();
+              if (Current == null)
+                {
+                Parent.setlLink(Temp);
+                NoOfNodes++;
+                return;//jump out of loop
+                }
+            }
+          else
+            { //go right
+            Current = Current.getrLink();
+            if(Current == null)
+              {
+              Parent.setrLink(Temp);
+              NoOfNodes++;
+              return;
+              }
+            }
+          }
+        }
+    }
+    
+     public void InOrder(Node ATree)
+      {
+      if (ATree != null)
+        {
+        InOrder(ATree.getlLink());
+        System.out.print(ATree.getData()+" ");
+        InOrder(ATree.getrLink());
+        }
+      }
+      
+     public void PreOrder(Node ATree)
+      {
+      if (ATree != null)
+        {
+        System.out.print(ATree.getData()+" ");
+        PreOrder(ATree.getlLink());
+        PreOrder(ATree.getrLink());
+        }
+      }
+      
+     public void PostOrder(Node ATree)
+     {
+      if (ATree != null)
+        {
+        PostOrder(ATree.getlLink());
+        PostOrder(ATree.getrLink());
+        System.out.print(ATree.getData()+" ");
+        }
+      }
+    
+	   public void displayTree() {
+	 	
+	      Stack globalStack = new Stack();
+	      globalStack.push(Root);
+	      int nBlanks = 32;
+	      boolean isRowEmpty = false;
+	      System.out.println(
+	      "......................................................");
+	      while(isRowEmpty==false)
+	         {
+	         Stack localStack = new Stack();
+	         isRowEmpty = true;
+	
+	         for(int j=0; j<nBlanks; j++)
+	            System.out.print(' ');
+	
+	         while(globalStack.isEmpty()==false)
+	            {
+	            Node temp = (Node)globalStack.pop();
+	            if(temp != null)
+	               {
+	               System.out.print(temp.getData());
+	               localStack.push(temp.getlLink());
+	               localStack.push(temp.getrLink());
+	
+	               if(temp.getlLink() != null ||
+	                                   temp.getrLink() != null)
+	                  isRowEmpty = false;
+	               }
+	            else
+	               {
+	               System.out.print("--");
+	               localStack.push(null);
+	               localStack.push(null);
+	               }
+	            for(int j=0; j<nBlanks*2-2; j++)
+	               System.out.print(' ');
+	            }  // end while globalStack not empty
+	         System.out.println();
+	         nBlanks /= 2;
+	         while(localStack.isEmpty()==false)
+	            globalStack.push( localStack.pop() );
+	         }  // end while isRowEmpty is false
+	      System.out.println(
+	      "......................................................");
+	      }
+}
+
+
+public class BinaryTree {
+
+     public static void main(String[] args)
+    {             
+        Scanner scan = new Scanner(System.in);
+        Tree list = new Tree();
+        
+        while(true)
+        {
+        	System.out.println("\n---Binary Tree----");
+        	System.out.println("1. Insert element into Binary Tree");
+            System.out.println("2. View Binary Tree");
+            System.out.println("3. Traversal");
+            System.out.println("4. Exit ");
+            int choice = scan.nextInt();            
+            switch (choice)
+            {
+            case 1 : 
+                System.out.println("Enter integer element to insert");
+                list.Insert( scan.nextInt() );                     
+                break;                          
+            case 2 : 
+                list.displayTree();                    
+                break;                         
+            case 3 : 
+            	list.displayTree();
+            	System.out.println("1. PreOrder");
+            	System.out.println("2. InOrder");
+            	System.out.println("3. PostOrder");
+            	int displayChoice=scan.nextInt();
+            	switch (displayChoice) 
+            		{
+    				case 1: 
+    					list.PreOrder(list.Root);
+    					break;
+    				case 2: 
+    					list.InOrder(list.Root);
+    					break;
+    				case 3: 
+    					list.PostOrder(list.Root);
+    					break;
+    				default :
+    					System.out.println("Wrong Entry \n ");
+                		break;
+					}
+            	 break;                       
+            case 4 : 
+                System.exit(0);
+                break;
+            default : 
+                System.out.println("Wrong Entry \n ");
+                break;   
+            }
+        }
+    }  
+}
