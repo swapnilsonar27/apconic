@@ -1,0 +1,77 @@
+/**
+ * @(#)PriorityQueue.java
+ *
+ *
+ * @author Swapnil Sonar
+ * @version 1.00 2014/2/13
+ */
+import java.util.*;
+
+class Customer {
+	
+	private int id;
+	private String name;
+	
+	public Customer(int i, String n){
+		this.id=i;
+		this.name=n;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+	
+}
+
+public class PQueue {
+   public static void main(String args[]) {
+      
+      PriorityQueue < Integer >  prq = new PriorityQueue < Integer > (); 
+       
+      for ( int i = 3; i  <  10; i++ ){  
+         prq.add (new Integer (i)) ; 
+      }
+      //natural ordering example of priority queue
+       System.out.println ( "----natural ordering example of priority queue-------");
+      System.out.println ( "Initial priority queue values are: "+ prq);
+      
+      Integer head = prq.poll();
+      System.out.println ( "Head of the queue is: "+ head);
+      
+      System.out.println ( "Priority queue values after poll: "+ prq);
+      
+      //PriorityQueue example with Comparator
+      System.out.println ( "\n-----PriorityQueue example with Comparator--------");
+      PriorityQueue < Customer > cust = new PriorityQueue < Customer >(10,idComparator);
+      addDataToQueue(cust);
+      pollDataFromQueue(cust);
+   }
+   
+   public static Comparator<Customer> idComparator = new Comparator<Customer>(){
+		
+		@Override
+		public int compare(Customer c1, Customer c2) {
+            return (int) (c1.getId() - c2.getId());
+        }
+	};
+   
+   private static void addDataToQueue(PriorityQueue<Customer> customerPriorityQueue) {
+		Random rand = new Random();
+		for(int i=0; i<10; i++){
+			int id = rand.nextInt(100);
+			customerPriorityQueue.add(new Customer(id, "Queue "+id));
+		}
+	}
+   
+   private static void pollDataFromQueue(PriorityQueue<Customer> customerPriorityQueue) {
+		while(true){
+			Customer cust = customerPriorityQueue.poll();
+			if(cust == null) break;
+			System.out.println("Processing Customer with ID="+cust.getId());
+		}
+	}
+}
